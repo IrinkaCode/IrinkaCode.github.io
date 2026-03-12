@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="app">
+
+        <div class="header">
+            <div class="logo">My Weather</div>
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Введите город...">
+                <button onclick="searchCity()">&#128269;</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-today" onclick="showTab('today')">Today</button>
+            <button class="tab-btn" id="tab-forecast" onclick="showTab('forecast')">5-day forecast</button>
+        </div>
+
+        <div class="panel" id="panel-today">
+            <div class="message">
+                <div class="icon">⛅</div>
+                <div>Loading...</div>
+            </div>
+        </div>
+
+        <div class="hidden" id="panel-forecast" >
+            <div class="message">
+                <div class="icon">📅</div>
+                <div>Please, wait for the data to load first.</div>
+            </div>
+        </div>
+
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
