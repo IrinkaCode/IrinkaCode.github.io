@@ -29,13 +29,13 @@ window.onload = function() {
         loadByCoords(pos.coords.latitude, pos.coords.longitude);
       },
       function() {
-          //Пользователь запретил — грузим Москву
-        loadByCity('Moscow');
+          //Пользователь запретил — грузим Калининград
+        loadByCity('Kaliningrad');
       }
     );
   } else {
-      //Браузер не поддерживает геолокацию — грузим Москву
-    loadByCity('Moscow');
+      //Браузер не поддерживает геолокацию — грузим Калининград
+    loadByCity('Kaliningrad');
   }
 };
 
@@ -96,7 +96,7 @@ function loadByCity(city) {
       if (weather.cod === 401) { showError('Неверный API ключ.'); return; }
       if (weather.cod === '404') { showNotFound(); return; }
 
-      //ставим официальное название в строку поиска(но англ.яз.)
+      //ставим официальное название в строку поиска(на англ.яз.)
       document.getElementById('cityInput').value = weather.name;
 
       //запрашиваем прогноз
@@ -153,7 +153,7 @@ function loadByCoords(lat, lon) {
 }
 
 
-//вкладка TODAY
+//========== вкладка TODAY =============//
 
   function renderToday(weather, forecast) {
     let html = '';
@@ -166,8 +166,7 @@ function loadByCoords(lat, lon) {
 
     // Текущая погода
     html += '<div class="block">';
-    html += '  <div class="block-title">CURRENT WEATHER — ' + weather.name
-          + '<span class="current-date">' + formatDate(new Date()) + '</span></div>';
+    html += '  <div class="block-title">CURRENT WEATHER — ' + weather.name + '<span class="current-date">' + formatDate(new Date()) + '</span></div>';
     html += '  <div class="current-body">';
     html += '    <div class="current-icon">';
     html += '      <div class="icon">' + getIcon(weather.weather[0].id, weather.weather[0].icon) + '</div>';
@@ -186,9 +185,8 @@ function loadByCoords(lat, lon) {
     html += '</div>';
 
     //Почасовой прогноз
-    // Собираем записи на сегодня из forecast.list
-    let todayKey  = dateKey(new Date());
-    let hours     = [];
+    let todayKey = dateKey(new Date());
+    let hours = [];
 
     for (let i = 0; i < forecast.list.length; i++) {
       if (dateKey(new Date(forecast.list[i].dt * 1000)) === todayKey) {
@@ -196,7 +194,7 @@ function loadByCoords(lat, lon) {
       }
     }
 
-    // Если сегодняшних нет (конец дня) — берём первые записи
+    //Если сегодняшних часов нет (конец дня) — берём первые записи
     if (hours.length === 0) {
       hours = forecast.list.slice(0, 6);
     }
@@ -208,7 +206,7 @@ function loadByCoords(lat, lon) {
     html += '  </table>';
     html += '</div>';
 
-    // --- Блок 3: Ближайшие города ---
+    //ближайшие города
     html += '<div class="block">';
     html += '  <div class="block-title">NEARBY PLACES</div>';
     html += '  <div class="nearby-grid" id="nearbyGrid">';
@@ -218,17 +216,15 @@ function loadByCoords(lat, lon) {
 
     document.getElementById('panel-today').innerHTML = html;
 
-    // Загружаем ближайшие города отдельно
     loadNearby();
   }
 
 
 //таблица почасового прогноза
-
 function renderHourlyTable(hours) {
   let html = '';
 
-  //"TODAY" + часы
+  //TODAY + часы
   html += '<tr class="row-head">';
   html += '  <td class="lbl">TODAY</td>';
   for (let i = 0; i < hours.length; i++) {
@@ -257,7 +253,7 @@ function renderHourlyTable(hours) {
   }
   html += '</tr>';
 
-  //ощущаемая
+  //ощущаемая темпа
   html += '<tr><td class="lbl">RealFeel</td>';
   for (let i = 0; i < hours.length; i++) {
     html += '<td class="feels-cell">' + Math.round(hours[i].main.feels_like) + '°</td>';
@@ -276,7 +272,6 @@ function renderHourlyTable(hours) {
 
 
 //Ближайшие города
-
 function loadNearby() {
   let results = [];
   let loaded  = 0;
@@ -300,7 +295,7 @@ function loadNearby() {
         .catch(function() { })
         .finally(function() {
           loaded++;
-          // Когда все города загружены — рисуем
+          
           if (loaded === nearbyCities.length) {
             let el = document.getElementById('nearbyGrid');
             if (!el) return;
@@ -327,7 +322,7 @@ function loadNearby() {
 function renderForecast() {
   if (!forecastData) return;
 
-  // Группируем все записи прогноза по дням
+  //прогноз по дням
   let days     = {};  
   let dayOrder = [];  
 
@@ -341,18 +336,18 @@ function renderForecast() {
     days[key].push(item);
   }
 
-  dayOrder = dayOrder.slice(0, 5);  // только 5 дней
+  dayOrder = dayOrder.slice(0, 5);  // берем 5 дней
 
   let html = '';
 
-  // --- Блок 1: карточки дней ---
+  //карточки дней
   html += '<div class="block">';
   html += '  <div class="block-title">5-DAY FORECAST - ' + forecastData.city.name + '</div>';
   html += '  <div class="days-row">';
 
   for (var i = 0; i < dayOrder.length; i++) {
     let items = days[dayOrder[i]];
-    let noon  = noonItem(items);        // запись ближайшая к 12:00
+    let noon  = noonItem(items);       
     let d     = new Date(noon.dt * 1000);
 
     // Мин и макс температура за день
@@ -377,12 +372,12 @@ function renderForecast() {
   html += '  </div>';
   html += '</div>';
 
-  // --- Блок 2: почасовой прогноз выбранного дня ---
+  // почасовой прогноз выбранного дня
   let selItems = days[dayOrder[selectedDayIdx]];
   let selDate  = new Date(selItems[0].dt * 1000);
 
   html += '<div class="block">';
-  html += '  <div class="block-title">HOURLY — '
+  html += '  <div class="block-title">HOURLY - '
     + selDate.getDate() + ' ' + monthNames[selDate.getMonth()] + '</div>';
   html += '  <table class="hourly-table">';
   html += renderHourlyTable(selItems);
@@ -420,27 +415,17 @@ function showNotFound() {
     + '</div>';
 }
 
-//дата в формате: "30.06.2026"
+//формат даты - 30.03.2026
 function formatDate(date) {
   return pad(date.getDate()) + '.' + pad(date.getMonth() + 1) + '.' + date.getFullYear();
 }
-
-  // // Формат времени: "7:04 AM"
-  // function time12(date) {
-  //   let h    = date.getHours();
-  //   let m    = date.getMinutes();
-  //   let ampm = h >= 12 ? 'PM' : 'AM';
-  //   h = h % 12;
-  //   if (h === 0) h = 12;
-  //   return h + ':' + pad(m) + ' ' + ampm;
-  // }
 
 //формат времени - 22:14
 function time12(date) {
   return pad(date.getHours()) + ':' + pad(date.getMinutes());
 }
 
-//добавляем ноль: 9 → "09"
+//добавляем ноль перед цифрой: 9 - 09
 function pad(n) {
   return n < 10 ? '0' + n : '' + n;
 }
@@ -467,7 +452,7 @@ function windDir(deg) {
     return best;
   }
 
-  // Первая буква заглавная: "sunny" → "Sunny"
+  // Первая заглавная буква : "sunny" → "Sunny"
   function cap(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
