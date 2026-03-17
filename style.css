@@ -138,13 +138,37 @@ body {
     font-weight: bold;
 }
 
-.current-icon { text-align: center; min-width: 75px; }
-.current-icon .icon { font-size: 48px; }
-.current-icon .desc { font-size: 14px; color: #777; margin-top: 4px; }
+.current-icon { 
+    text-align: center;
+    min-width: 75px; 
+}
 
-.current-temp { min-width: 110px;height: 80px;}
-.current-temp .temp { font-size: 50px; font-weight: 300; line-height: 1; }
-.current-temp .feels { font-size: 14px; color: #777; margin-top: 15px; }
+.current-icon .icon {
+    font-size: 48px; 
+}
+
+.current-icon .desc {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px; 
+}
+
+.current-temp {
+    min-width: 110px;
+    height: 80px;
+}
+
+.current-temp .temp {
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 1; 
+}
+
+.current-temp .feels {
+    font-size: 14px;
+    color: #777;
+    margin-top: 15px; 
+}
 
 /* Рассвет-Закат-Длительность */
 .current-sun {
@@ -202,11 +226,26 @@ body {
     background-color: #fafafa;
 }
 
-.icon-cell  { font-size: 26px; }
-.temp-cell  { font-weight: bold; }
-.feels-cell { color: #666; }
-.wind-cell  { color: #333; }
-.desc-cell  { color: #666; }
+.icon-cell {
+    font-size: 26px; 
+}
+
+.temp-cell {
+    font-weight: bold; 
+}
+
+.feels-cell {
+    color: #666;
+}
+
+.wind-cell {
+    color: #333;
+}
+
+.desc-cell {
+    color: #666; 
+}
+
 
 /* Ближайшие города */
 .nearby-grid {
@@ -228,9 +267,19 @@ body {
     border-right: none;
 }
 
-.nearby-item .name { flex: 1; font-size: 16px;}
-.nearby-item .icon { font-size: 20px; }
-.nearby-item .temp { font-weight: bold; color: #333; }
+.nearby-item .name {
+    flex: 1;
+    font-size: 16px;
+}
+
+.nearby-item .icon {
+    font-size: 20px; 
+}
+
+.nearby-item .temp {
+    font-weight: bold;
+    color: #333;
+}
 
 
 /* 5-дневный прогноз */
@@ -248,16 +297,44 @@ body {
     font-size: 16px;
 }
 
-.day-card:last-child { border-right: none; }
-.day-card:hover      { background: #f5f5f5; }
-.day-card.selected   { background: #e0f7fa; }
+.day-card:last-child {
+    border-right: none;
+}
 
-.day-card .day-name { font-weight: bold; font-size: 14px; color: #333; }
-.day-card .day-date { color: #aaa; margin: 2px 0 5px; }
-.day-card .icon     { font-size: 28px; margin: 5px 0; }
-.day-card .temp     { font-weight: bold; color: #333; }
-.day-card .desc     { color: #999; margin-top: 3px; text-transform: capitalize; }
+.day-card:hover {
+    background: #f5f5f5;
+}
 
+.day-card.selected {
+    background: #e0f7fa;
+}
+
+.day-card .day-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.day-card .day-date {
+    color: #aaa; 
+    margin: 2px 0 5px;
+}
+
+.day-card .icon {
+    font-size: 28px;
+    margin: 5px 0;
+
+}
+.day-card .temp {
+    font-weight: bold;
+    color: #333;
+}
+
+.day-card .desc {
+    color: #999;
+    margin-top: 3px;
+    text-transform: capitalize; 
+}
 
 .message {
     text-align: center;
@@ -293,9 +370,17 @@ body { padding: 0; }
     border-right: none;
 }
 
-.header { padding: 10px 12px; }
-.header .logo { font-size: 20px; }
-.header .search-box input { width: 130px; font-size: 13px; }
+.header {
+    padding: 10px 12px;
+}
+
+.header .logo {
+    font-size: 20px;
+}
+
+.header .search-box input {
+    width: 130px; font-size: 13px;
+}
 
 .current-body {
     flex-wrap: wrap;
@@ -303,7 +388,9 @@ body { padding: 0; }
     padding: 10px 12px 15px;
 }
 
-.current-temp .temp { font-size: 38px; }
+.current-temp .temp {
+    font-size: 38px;
+}
 
 .current-sun {
     margin-left: 0;
@@ -312,15 +399,27 @@ body { padding: 0; }
     line-height: 1.8;
 }
 
-.block { overflow-x: auto; }
+.block {
+    overflow-x: auto;
+}
 
-.hourly-table { min-width: 400px; }
+.hourly-table {
+    min-width: 400px;
+}
 
-.hourly-table td { padding: 6px 7px; font-size: 12px; }
+.hourly-table td {
+    padding: 6px 7px;
+    font-size: 12px;
+}
 
-.hourly-table .lbl { padding-left: 10px; font-size: 11px; }
+.hourly-table .lbl {
+    padding-left: 10px;
+    font-size: 11px;
+}
 
-.days-row { flex-wrap: wrap; }
+.days-row {
+    flex-wrap: wrap;
+}
 
 .day-card {
     min-width: calc(33.3% - 1px);
@@ -329,10 +428,21 @@ body { padding: 0; }
     font-size: 11px;
 }
 
-.day-card .day-name { font-size: 12px; }
-.day-card .icon { font-size: 22px; }
+.day-card .day-name {
+    font-size: 12px;
+}
 
-.block-title { font-size: 11px; padding: 10px 12px 6px; }
+.day-card .icon {
+    font-size: 22px;
+}
 
-.nearby-item { padding: 10px 12px; font-size: 13px; }
+.block-title {
+    font-size: 11px;
+    padding: 10px 12px 6px;
+}
+
+.nearby-item {
+    padding: 10px 12px;
+    font-size: 13px;
+}
 }
