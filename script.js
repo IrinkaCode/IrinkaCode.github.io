@@ -11,7 +11,7 @@ const nearbyCities = [
   { name: 'Berlin', lat: 52.52, lon: 13.41 },
   { name: 'Warsaw', lat: 52.23, lon: 21.01 },
   { name: 'Vienna', lat: 48.21, lon: 16.37 },
-  { name: 'Rome',   lat: 41.90, lon: 12.50 },
+  { name: 'Rome',   lat: 41.89, lon: 12.48 },
 ];
 
 const dayNames   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -53,7 +53,7 @@ document.getElementById('cityInput').addEventListener('keydown', function(e) {
 });
 
 
-// ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
+//Переключение вкладок
 
 function showTab(name) {
   currentTab = name;
@@ -140,7 +140,9 @@ function loadByCoords(lat, lon) {
       document.getElementById('cityInput').value = weather.name;
 
       fetch(forecastUrl)
-        .then(function(response) { return response.json(); })
+        .then(function(response) { 
+          return response.json(); 
+        })
         .then(function(forecast) {
           forecastData   = forecast;
           selectedDayIdx = 0;
@@ -177,8 +179,8 @@ function loadByCoords(lat, lon) {
     html += '      <div class="feels">Real Feel ' + Math.round(weather.main.feels_like) + '°</div>';
     html += '    </div>';
     html += '    <div class="current-sun">';
-    html += '      <div><span class="label">Sunrise:</span> '  + time12(sunrise) + '</div>';
-    html += '      <div><span class="label">Sunset:</span> '   + time12(sunset)  + '</div>';
+    html += '      <div><span class="label">Sunrise:</span> '  + formatTime(sunrise) + '</div>';
+    html += '      <div><span class="label">Sunset:</span> '   + formatTime(sunset)  + '</div>';
     html += '      <div><span class="label">Duration:</span> ' + diffH + ':' + pad(diffM) + ' hr</div>';
     html += '    </div>';
     html += '  </div>';
@@ -228,7 +230,7 @@ function renderHourlyTable(hours) {
   html += '<tr class="row-head">';
   html += '  <td class="lbl">TODAY</td>';
   for (let i = 0; i < hours.length; i++) {
-    html += '<td>' + time12(new Date(hours[i].dt * 1000)) + '</td>';
+    html += '<td>' + formatTime(new Date(hours[i].dt * 1000)) + '</td>';
   }
   html += '</tr>';
 
@@ -336,7 +338,7 @@ function renderForecast() {
     days[key].push(item);
   }
 
-  dayOrder = dayOrder.slice(0, 5);  // берем 5 дней
+  dayOrder = dayOrder.slice(0, 5);  // 5 дней
 
   let html = '';
 
@@ -377,8 +379,7 @@ function renderForecast() {
   let selDate  = new Date(selItems[0].dt * 1000);
 
   html += '<div class="block">';
-  html += '  <div class="block-title">HOURLY - '
-    + selDate.getDate() + ' ' + monthNames[selDate.getMonth()] + '</div>';
+  html += '  <div class="block-title">HOURLY - ' + selDate.getDate() + ' ' + monthNames[selDate.getMonth()] + '</div>';
   html += '  <table class="hourly-table">';
   html += renderHourlyTable(selItems);
   html += '  </table>';
@@ -388,10 +389,10 @@ function renderForecast() {
 }
 
 // Клик по карточке дня
-  function selectDay(idx) {
-    selectedDayIdx = idx;
-    renderForecast();
-  }
+function selectDay(idx) {
+  selectedDayIdx = idx;
+  renderForecast();
+}
 
 
 // =============================================
@@ -421,7 +422,7 @@ function formatDate(date) {
 }
 
 //формат времени - 22:14
-function time12(date) {
+function formatTime(date) {
   return pad(date.getHours()) + ':' + pad(date.getMinutes());
 }
 
@@ -458,23 +459,7 @@ function windDir(deg) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  // Emoji иконка по коду погоды
-  function getIcon(id, icon) {
-    let night = icon && icon.endsWith('n');
-    if (id >= 200 && id < 300) return '⛈';
-    if (id >= 300 && id < 400) return '🌦';
-    if (id >= 500 && id < 504) return '🌧';
-    if (id === 511)             return '🌨';
-    if (id >= 520 && id < 600) return '🌧';
-    if (id >= 600 && id < 700) return '❄️';
-    if (id >= 700 && id < 800) return '🌫';
-    if (id === 800) return night ? '🌙' : '☀️';
-    if (id === 801) return night ? '🌙' : '🌤';
-    if (id === 802) return '⛅';
-    if (id >= 803)  return '☁️';
-    return '🌡';
+//иконки погоды
+function getIcon(id, icon) {
+  return '<img src="https://openweathermap.org/img/wn/' + icon + '@2x.png" width="40" height="40">';
 }
-
-// function getIcon(id, icon) {
-//   return '<img src="https://openweathermap.org/img/wn/' + icon + '@2x.png" width="40" height="40">';
-// }
